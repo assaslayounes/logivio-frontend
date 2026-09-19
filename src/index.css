@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+  font-family: "Cairo", "IBM Plex Sans Arabic", sans-serif;
+  background-color: #F7F5F0;
+  color: #0F172A;
+}
+
+/* أرقام ثابتة العرض في الجداول والمؤشرات */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,31 @@
+<svg width="280" height="220" viewBox="0 0 280 220" xmlns="http://www.w3.org/2000/svg">
+  <rect width="280" height="220" rx="20" fill="#E4EEEE"/>
+  <!-- شاشة الحاسوب -->
+  <rect x="50" y="45" width="180" height="120" rx="10" fill="#FFFFFF" stroke="#0F3D3E" stroke-width="3"/>
+  <rect x="120" y="165" width="40" height="14" fill="#0F3D3E"/>
+  <rect x="100" y="179" width="80" height="8" rx="4" fill="#0F3D3E"/>
+
+  <!-- مؤشرات داخل الشاشة -->
+  <rect x="66" y="60" width="50" height="30" rx="6" fill="#E4EEEE"/>
+  <text x="91" y="80" font-size="14" text-anchor="middle" fill="#0F3D3E" font-family="Arial" font-weight="bold">91%</text>
+
+  <rect x="122" y="60" width="50" height="30" rx="6" fill="#FCE9DD"/>
+  <circle cx="147" cy="75" r="9" fill="none" stroke="#C2410C" stroke-width="2"/>
+  <path d="M147 70 L147 75 L151 77" stroke="#C2410C" stroke-width="2" stroke-linecap="round" fill="none"/>
+
+  <!-- رسم بياني بسيط -->
+  <g transform="translate(66,100)">
+    <rect x="0" y="30" width="14" height="20" rx="2" fill="#0F3D3E"/>
+    <rect x="20" y="16" width="14" height="34" rx="2" fill="#0F3D3E"/>
+    <rect x="40" y="4" width="14" height="46" rx="2" fill="#C2410C"/>
+    <rect x="60" y="22" width="14" height="28" rx="2" fill="#0F3D3E"/>
+    <rect x="80" y="10" width="14" height="40" rx="2" fill="#0F3D3E"/>
+    <rect x="100" y="26" width="14" height="24" rx="2" fill="#0F3D3E"/>
+  </g>
+
+  <!-- علامة تنبيه صغيرة -->
+  <g transform="translate(215,55)">
+    <circle cx="0" cy="0" r="11" fill="#C2410C"/>
+    <text x="0" y="4" font-size="13" text-anchor="middle" fill="#FFFFFF" font-family="Arial" font-weight="bold">!</text>
+  </g>
+</svg>

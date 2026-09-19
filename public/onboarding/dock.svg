@@ -1,0 +1,21 @@
+<svg width="280" height="220" viewBox="0 0 280 220" xmlns="http://www.w3.org/2000/svg">
+  <rect width="280" height="220" rx="20" fill="#E4EEEE"/>
+  <!-- واجهة المستودع -->
+  <rect x="40" y="60" width="200" height="110" rx="8" fill="#0F3D3E"/>
+  <!-- باب الرصيف المفتوح -->
+  <rect x="70" y="90" width="70" height="80" rx="4" fill="#F7F5F0"/>
+  <rect x="80" y="100" width="50" height="8" rx="2" fill="#C2410C"/>
+  <!-- صناديق عند الرصيف -->
+  <rect x="150" y="130" width="30" height="30" rx="3" fill="#C2410C"/>
+  <rect x="185" y="140" width="24" height="20" rx="3" fill="#E4EEEE"/>
+  <!-- سقف بارز -->
+  <rect x="30" y="50" width="220" height="14" rx="6" fill="#0F172A"/>
+  <!-- لوحة تحكم صغيرة (بدء/إنهاء) -->
+  <g transform="translate(150,20)">
+    <rect x="0" y="0" width="60" height="34" rx="8" fill="#FFFFFF" stroke="#0F3D3E" stroke-width="2.5"/>
+    <circle cx="15" cy="17" r="7" fill="#15803D"/>
+    <path d="M12 17 L17 17 M14.5 14.5 L14.5 19.5" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" style="display:none"/>
+    <path d="M12.5 13 L19 17 L12.5 21 Z" fill="#FFFFFF"/>
+    <rect x="35" y="10" width="16" height="14" rx="2" fill="#C2410C"/>
+  </g>
+</svg>
