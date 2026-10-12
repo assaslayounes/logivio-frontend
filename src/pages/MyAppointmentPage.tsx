@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MapPin } from "lucide-react";
+import { QRCodeSVG } from "qrcode.react";
 
 export function MyAppointmentPage() {
   const [saved, setSaved] = useState<SavedAppointment[]>([]);
@@ -78,6 +79,14 @@ function AppointmentTrackCard({ saved, onDismiss }: { saved: SavedAppointment; o
           <InfoRow label="الموعد" value={new Date(status.scheduled_start).toLocaleTimeString("ar", { hour: "2-digit", minute: "2-digit" })} />
           <InfoRow label="الرصيف" value={status.dock_name} />
         </div>
+
+        {/* رمز QR حقيقي يقرؤه الحارس بالكاميرا مباشرة */}
+        {!hasFinished && (
+          <div className="mb-4 flex flex-col items-center rounded-md border border-border bg-white p-4">
+            <QRCodeSVG value={saved.qrCode} size={176} level="M" marginSize={2} />
+            <p className="mt-3 text-xs text-ink/50">أظهر هذا الرمز للحارس عند البوابة</p>
+          </div>
+        )}
 
         {/* شريط الحالة الحية */}
         <div className="mb-4 rounded-md bg-canvas p-3">

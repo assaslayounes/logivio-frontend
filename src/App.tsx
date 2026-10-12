@@ -5,6 +5,7 @@ import { HomePage } from "@/pages/HomePage";
 import { OnboardingPage } from "@/pages/OnboardingPage";
 import { LoginPage } from "@/pages/LoginPage";
 import { RegisterPage } from "@/pages/RegisterPage";
+import { RegisterFactoryPage } from "@/pages/RegisterFactoryPage";
 import { BookingPage } from "@/pages/BookingPage";
 import { MyAppointmentPage } from "@/pages/MyAppointmentPage";
 import { AdminDashboardPage } from "@/pages/AdminDashboardPage";
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/onboarding" element={<OnboardingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/register-factory" element={<RegisterFactoryPage />} />
 
         <Route element={<ProtectedRoute />}>
           <Route path="/booking" element={<BookingPage />} />

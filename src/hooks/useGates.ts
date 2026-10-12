@@ -23,3 +23,14 @@ export function useUpdateGateStatus() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["gates"] }),
   });
 }
+
+export function useCreateGate() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (input: { name: string; avgCheckinMinutes: number }) => {
+      const { data } = await api.post<{ id: number }>("/gates", input);
+      return data;
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["gates"] }),
+  });
+}

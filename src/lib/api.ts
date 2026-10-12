@@ -10,7 +10,7 @@ export const api = axios.create({
 
 // إرفاق رمز الدخول (JWT) تلقائيًا بكل طلب إن كان المستخدم مسجّلاً دخوله
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("logivio_token");
+  const token = localStorage.getItem("capaflow_token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }

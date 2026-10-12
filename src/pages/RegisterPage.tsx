@@ -3,30 +3,33 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { useAuth, type UserRole } from "@/context/AuthContext";
+import { useAuth, type OperationalRole } from "@/context/AuthContext";
+import { useFacilitiesList } from "@/hooks/useFacility";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input, Label } from "@/components/ui/input";
+import { Input, Label, Select } from "@/components/ui/input";
 import { roleHomePath, roleLabels } from "@/lib/roleHomePath";
-import { Truck, ScanLine, Warehouse, LayoutDashboard } from "lucide-react";
+import { LogoMark } from "@/components/Logo";
+import { Truck, ScanLine, Warehouse } from "lucide-react";
 
-const roleOptions: { value: UserRole; icon: typeof Truck }[] = [
+const roleOptions: { value: OperationalRole; icon: typeof Truck }[] = [
   { value: "driver", icon: Truck },
   { value: "gate_agent", icon: ScanLine },
   { value: "dock_operator", icon: Warehouse },
-  { value: "admin", icon: LayoutDashboard },
 ];
 
 const schema = z.object({
   fullName: z.string().min(2, "الاسم الكامل مطلوب"),
   email: z.string().email("بريد إلكتروني غير صالح"),
   password: z.string().min(6, "6 أحرف على الأقل"),
-  role: z.enum(["driver", "gate_agent", "dock_operator", "admin"]),
+  role: z.enum(["driver", "gate_agent", "dock_operator"]),
+  facilityId: z.coerce.number({ invalid_type_error: "اختر مصنعك" }).positive("اختر مصنعك"),
 });
 type FormValues = z.infer<typeof schema>;
 
 export function RegisterPage() {
   const { register: registerUser } = useAuth();
+  const { data: facilities, isLoading: facilitiesLoading } = useFacilitiesList();
   const navigate = useNavigate();
   const {
     register,
@@ -51,9 +54,11 @@ export function RegisterPage() {
   return (
     <div className="mx-auto flex min-h-[80vh] max-w-sm flex-col justify-center py-8">
       <div className="mb-6 text-center">
-        <img src="/logo.svg" alt="Logivio" className="mx-auto mb-3 h-14 w-14" />
-        <p className="text-xl font-bold text-brand">إنشاء حساب جديد</p>
-        <p className="mt-1 text-sm text-ink/50">اختر دورك وأنشئ حسابك للبدء</p>
+        <div className="mb-3 flex justify-center">
+          <LogoMark size={56} />
+        </div>
+        <p className="text-xl font-bold text-brand">إنشاء حساب موظف</p>
+        <p className="mt-1 text-sm text-ink/50">انضم إلى مصنع قائم بالفعل على المنصة</p>
       </div>
       <Card>
         <CardContent className="p-6">
@@ -64,7 +69,7 @@ export function RegisterPage() {
                 control={control}
                 name="role"
                 render={({ field }) => (
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-3 gap-2">
                     {roleOptions.map(({ value, icon: Icon }) => (
                       <button
                         type="button"
@@ -83,6 +88,17 @@ export function RegisterPage() {
                   </div>
                 )}
               />
+            </div>
+
+            <div>
+              <Label htmlFor="facilityId">المصنع</Label>
+              <Select id="facilityId" disabled={facilitiesLoading} {...register("facilityId")}>
+                <option value="">اختر مصنعك</option>
+                {facilities?.map((f) => (
+                  <option key={f.id} value={f.id}>{f.name}</option>
+                ))}
+              </Select>
+              {errors.facilityId && <p className="mt-1 text-xs text-danger">{errors.facilityId.message}</p>}
             </div>
 
             <div>
@@ -111,9 +127,11 @@ export function RegisterPage() {
       </Card>
       <p className="mt-5 text-center text-sm text-ink/60">
         لديك حساب بالفعل؟{" "}
-        <Link to="/login" className="font-medium text-brand hover:underline">
-          تسجيل الدخول
-        </Link>
+        <Link to="/login" className="font-medium text-brand hover:underline">تسجيل الدخول</Link>
+      </p>
+      <p className="mt-2 text-center text-xs text-ink/40">
+        أنت صاحب مصنع ولم تُسجَّله بعد؟{" "}
+        <Link to="/register-factory" className="font-medium text-brand hover:underline">سجّل مصنعك الآن</Link>
       </p>
     </div>
   );

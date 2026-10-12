@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import toast from "react-hot-toast";
 import { useCheckinStatus, useStartOperation, useFinishOperation, useLogDelayReason } from "@/hooks/useQueue";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input, Label, Select } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { PlayCircle, CheckCircle2, ScanLine } from "lucide-react";
+import { PlayCircle, CheckCircle2, ScanLine, Camera } from "lucide-react";
+const QrScanner = lazy(() => import("@/components/QrScanner").then((m) => ({ default: m.QrScanner })));
 
 const delayReasons = [
   { value: "late_truck", label: "تأخر الشاحنة" },
@@ -22,6 +23,7 @@ const delayReasons = [
 export function DockOperationsPage() {
   const [qrInput, setQrInput] = useState("");
   const [activeQr, setActiveQr] = useState<string | null>(null);
+  const [scanning, setScanning] = useState(false);
   const [showDelayForm, setShowDelayForm] = useState(false);
   const [reasonCategory, setReasonCategory] = useState(delayReasons[0].value);
   const [delayMinutes, setDelayMinutes] = useState(10);
@@ -47,10 +49,29 @@ export function DockOperationsPage() {
       <h1 className="mb-1 text-xl font-semibold text-ink">عمليات الرصيف</h1>
       <p className="mb-6 text-sm text-ink/60">امسح رمز الشاحنة الموجودة عند الرصيف لبدء العملية أو إنهائها.</p>
 
+      <Button size="lg" className="mb-4 w-full" onClick={() => setScanning(true)}>
+        <Camera size={18} />
+        مسح رمز QR بالكاميرا
+      </Button>
+
+      {scanning && (
+        <Suspense fallback={null}>
+        <QrScanner
+          onClose={() => setScanning(false)}
+          onScan={(code) => {
+            setScanning(false);
+            setQrInput(code);
+            setActiveQr(code);
+            setShowDelayForm(false);
+          }}
+        />
+        </Suspense>
+      )}
+
       <form onSubmit={handleScan} className="mb-5 flex gap-2">
         <div className="flex-1">
           <Label htmlFor="qr">رمز QR</Label>
-          <Input id="qr" placeholder="مثال: QR-1" value={qrInput} onChange={(e) => setQrInput(e.target.value)} />
+          <Input id="qr" placeholder="أو أدخل الرمز يدويًا" value={qrInput} onChange={(e) => setQrInput(e.target.value)} />
         </div>
         <Button type="submit" className="mt-6">
           <ScanLine size={16} />

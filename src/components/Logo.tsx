@@ -5,7 +5,7 @@ interface LogoProps {
 }
 
 /**
- * علامة Logivio: مربع بلون العلامة التجارية (تيل صناعي) يحتوي مسارين متوازيين
+ * علامة CapaFlow: مربع بلون العلامة التجارية (تيل صناعي) يحتوي مسارين متوازيين
  * (يمثلان حارتي حركة الشاحنات) مع نقطة كهرمانية تمثل شاحنة تتقدم في تدفق منظّم.
  */
 export function LogoMark({ size = 36 }: { size?: number }) {
@@ -26,7 +26,7 @@ export function Logo({ size = 36, withWordmark = true, className = "" }: LogoPro
       <LogoMark size={size} />
       {withWordmark && (
         <span className="text-lg font-extrabold tracking-tight text-brand" style={{ fontFamily: "Cairo" }}>
-          Logivio
+          CapaFlow
         </span>
       )}
     </div>

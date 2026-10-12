@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { roleLabels } from "@/lib/roleHomePath";
 import { Card } from "@/components/ui/card";
+import { LogoMark } from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import {
   Truck, ScanLine, LayoutDashboard, Warehouse, CalendarClock,
@@ -104,16 +105,17 @@ export function HomePage() {
   return (
     <div className="mx-auto max-w-3xl py-4">
       <div className="mb-12 text-center">
-        <img src="/logo.svg" alt="Logivio" className="mx-auto mb-5 h-16 w-16" />
+        <div className="mb-5 flex justify-center"><LogoMark size={64} /></div>
         <h1 className="mb-3 text-3xl font-bold text-ink">
           نظّم تدفق شاحناتك <span className="text-brand">رقميًا</span>
         </h1>
         <p className="mx-auto mb-7 max-w-lg text-sm leading-6 text-ink/60">
-          منصة Logivio تحوّل استقبال الشاحنات داخل موقعك الصناعي من مكالمات هاتفية وجداول Excel
+          منصة CapaFlow تحوّل استقبال الشاحنات داخل موقعك الصناعي من مكالمات هاتفية وجداول Excel
           إلى نظام رقمي مركزي: حجز، طوابير، بوابات، وأرصفة — كل ذلك بلا تعارض ولا انتظار عشوائي.
         </p>
         <div className="flex flex-wrap justify-center gap-3">
-          <Button size="lg" onClick={() => navigate("/register")}>إنشاء حساب</Button>
+          <Button size="lg" onClick={() => navigate("/register-factory")}>سجّل مصنعك</Button>
+          <Button size="lg" variant="outline" onClick={() => navigate("/register")}>إنشاء حساب موظف</Button>
           <Button size="lg" variant="outline" onClick={() => navigate("/login")}>تسجيل الدخول</Button>
           <Button size="lg" variant="ghost" onClick={() => navigate("/onboarding")}>كيف تعمل المنصة؟</Button>
         </div>

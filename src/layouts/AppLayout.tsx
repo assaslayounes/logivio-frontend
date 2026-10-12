@@ -3,6 +3,7 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useAuth, type UserRole } from "@/context/AuthContext";
 import { roleLabels } from "@/lib/roleHomePath";
+import { LogoMark } from "@/components/Logo";
 import {
   CalendarClock, LayoutDashboard, ScanLine, ListOrdered, Home,
   Truck, Warehouse, Settings, Menu, X, LogOut, LogIn,
@@ -47,8 +48,8 @@ export function AppLayout() {
           <Menu size={22} className="text-ink" />
         </button>
         <div className="flex items-center gap-2">
-          <span className="text-base font-bold text-brand">Logivio</span>
-          <img src="/logo.svg" alt="" className="h-6 w-6" />
+          <span className="text-base font-bold text-brand">CapaFlow</span>
+          <LogoMark size={24} />
         </div>
       </header>
 
@@ -65,9 +66,9 @@ export function AppLayout() {
         >
           <div className="mb-8 flex items-center justify-between px-2">
             <div className="flex items-center gap-2">
-              <img src="/logo.svg" alt="Logivio" className="h-8 w-8" />
+              <LogoMark size={32} />
               <div>
-                <p className="text-lg font-bold text-brand leading-none">Logivio</p>
+                <p className="text-lg font-bold text-brand leading-none">CapaFlow</p>
                 <p className="text-[11px] text-ink/50">إدارة تدفق الشاحنات</p>
               </div>
             </div>

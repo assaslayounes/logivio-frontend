@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input, Label } from "@/components/ui/input";
 import { roleHomePath } from "@/lib/roleHomePath";
+import { LogoMark } from "@/components/Logo";
 
 const schema = z.object({
   email: z.string().email("بريد إلكتروني غير صالح"),
@@ -35,7 +36,9 @@ export function LoginPage() {
   return (
     <div className="mx-auto flex min-h-[80vh] max-w-sm flex-col justify-center">
       <div className="mb-8 text-center">
-        <img src="/logo.svg" alt="Logivio" className="mx-auto mb-3 h-14 w-14" />
+        <div className="mb-3 flex justify-center">
+          <LogoMark size={56} />
+        </div>
         <p className="text-xl font-bold text-brand">تسجيل الدخول</p>
         <p className="mt-1 text-sm text-ink/50">أدخل بياناتك للمتابعة إلى حسابك</p>
       </div>

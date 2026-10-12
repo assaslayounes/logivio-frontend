@@ -33,6 +33,7 @@ export interface Appointment {
   scheduled_start: string;
   scheduled_end: string;
   status: AppointmentStatus;
+  reschedule_reason?: string | null;
 }
 
 export interface CreateAppointmentInput {
@@ -97,4 +98,15 @@ export interface CheckinScanResult {
   plate_number: string;
   driver_name: string;
   queueInfo: QueueInfo | null;
+}
+
+export type RescheduleReason = "weather" | "power_outage" | "dock_maintenance" | "other";
+
+export interface RescheduleInput {
+  id: number;
+  scheduledStart: string;
+  scheduledEnd: string;
+  dockId?: number;
+  reasonCategory: RescheduleReason;
+  notes?: string;
 }

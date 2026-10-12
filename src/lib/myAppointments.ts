@@ -1,4 +1,4 @@
-const STORAGE_KEY = "logivio_my_appointments";
+const STORAGE_KEY = "capaflow_my_appointments";
 
 export interface SavedAppointment {
   qrCode: string;

@@ -22,6 +22,21 @@ export interface UpdateFacilityInput {
   maxTrucksPerDay?: number;
 }
 
+export interface FacilityOption {
+  id: number;
+  name: string;
+}
+
+export function useFacilitiesList() {
+  return useQuery({
+    queryKey: ["facilities-list"],
+    queryFn: async () => {
+      const { data } = await api.get<FacilityOption[]>("/facilities");
+      return data;
+    },
+  });
+}
+
 export function useFacility(facilityId = 1) {
   return useQuery({
     queryKey: ["facility", facilityId],

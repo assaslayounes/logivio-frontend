@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import toast from "react-hot-toast";
 import { useCheckinStatus, useArriveAtGate, useCheckinEntry } from "@/hooks/useQueue";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input, Label } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { ScanLine, Check, X, LogIn } from "lucide-react";
+import { ScanLine, Check, X, LogIn, Camera } from "lucide-react";
+const QrScanner = lazy(() => import("@/components/QrScanner").then((m) => ({ default: m.QrScanner })));
 
 export function GateCheckinPage() {
   const [qrInput, setQrInput] = useState("");
   const [activeQr, setActiveQr] = useState<string | null>(null);
+  const [scanning, setScanning] = useState(false);
   const { data: result, isFetching, isError } = useCheckinStatus(activeQr, { poll: false });
   const arrive = useArriveAtGate();
   const entry = useCheckinEntry();
@@ -50,12 +52,30 @@ export function GateCheckinPage() {
         امسح رمز QR الخاص بالشاحنة (أو أدخله يدويًا) لتسجيل وصولها أو تأكيد دخولها.
       </p>
 
+      <Button size="lg" className="mb-4 w-full" onClick={() => setScanning(true)}>
+        <Camera size={18} />
+        مسح رمز QR بالكاميرا
+      </Button>
+
+      {scanning && (
+        <Suspense fallback={null}>
+        <QrScanner
+          onClose={() => setScanning(false)}
+          onScan={(code) => {
+            setScanning(false);
+            setQrInput(code);
+            setActiveQr(code); // بحث تلقائي فور القراءة، دون أي كتابة يدوية
+          }}
+        />
+        </Suspense>
+      )}
+
       <form onSubmit={handleScan} className="mb-5 flex gap-2">
         <div className="flex-1">
           <Label htmlFor="qr">رمز QR</Label>
           <Input
             id="qr"
-            placeholder="مثال: QR-1"
+            placeholder="أو أدخل الرمز يدويًا"
             value={qrInput}
             onChange={(e) => setQrInput(e.target.value)}
           />

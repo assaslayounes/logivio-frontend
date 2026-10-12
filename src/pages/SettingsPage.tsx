@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input, Label } from "@/components/ui/input";
 import { Navigate } from "react-router-dom";
+import { ResourceManager } from "@/components/ResourceManager";
 
 const schema = z.object({
   name: z.string().min(2, "اسم المصنع مطلوب"),
@@ -59,11 +60,11 @@ export function SettingsPage() {
   if (isLoading) return <p className="text-sm text-ink/50">جارٍ التحميل...</p>;
 
   return (
-    <div className="mx-auto max-w-lg">
+    <div className="mx-auto max-w-4xl">
       <h1 className="mb-1 text-xl font-semibold text-ink">إعدادات المصنع</h1>
       <p className="mb-6 text-sm text-ink/60">هذه البيانات تُستخدم في المواعيد والتقارير وواجهة الحجز.</p>
 
-      <Card>
+      <Card className="max-w-lg">
         <CardHeader>
           <CardTitle>بيانات المصنع</CardTitle>
         </CardHeader>
@@ -113,6 +114,8 @@ export function SettingsPage() {
           </form>
         </CardContent>
       </Card>
+
+      <ResourceManager facilityId={facilityId} />
     </div>
   );
 }

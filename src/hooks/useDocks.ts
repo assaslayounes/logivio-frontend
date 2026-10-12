@@ -23,3 +23,14 @@ export function useUpdateDockStatus() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["docks"] }),
   });
 }
+
+export function useCreateDock() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (input: { name: string; avgProcessMinutes: number }) => {
+      const { data } = await api.post<{ id: number }>("/docks", input);
+      return data;
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["docks"] }),
+  });
+}

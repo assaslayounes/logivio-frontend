@@ -1,10 +1,13 @@
+import { useState } from "react";
 import { useDocks, useUpdateDockStatus } from "@/hooks/useDocks";
 import { useGates, useUpdateGateStatus } from "@/hooks/useGates";
 import { useAppointments } from "@/hooks/useAppointments";
 import { useDashboardStats } from "@/hooks/useQueue";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import type { DockStatus, GateStatus } from "@/types";
+import type { Appointment, DockStatus, GateStatus } from "@/types";
+import { RescheduleDialog } from "@/components/RescheduleDialog";
+import { CalendarClock } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import toast from "react-hot-toast";
 
@@ -28,7 +31,8 @@ export function AdminDashboardPage() {
   const { data: stats } = useDashboardStats(facilityId, today);
   const { data: docks } = useDocks(facilityId);
   const { data: gates } = useGates(facilityId);
-  const { data: appointments } = useAppointments(today);
+  const { data: appointments } = useAppointments(today, facilityId);
+  const [rescheduling, setRescheduling] = useState<Appointment | null>(null);
   const updateDock = useUpdateDockStatus();
   const updateGate = useUpdateGateStatus();
 
@@ -104,6 +108,7 @@ export function AdminDashboardPage() {
       <h2 className="mb-3 text-sm font-semibold text-ink/70">مواعيد اليوم</h2>
       <Card>
         <CardContent className="p-0">
+          <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border text-right text-xs text-ink/50">
@@ -112,6 +117,7 @@ export function AdminDashboardPage() {
                 <th className="px-4 py-2.5 font-medium">الرصيف</th>
                 <th className="px-4 py-2.5 font-medium">العملية</th>
                 <th className="px-4 py-2.5 font-medium">الحالة</th>
+                <th className="px-4 py-2.5 font-medium">إجراء</th>
               </tr>
             </thead>
             <tbody>
@@ -129,20 +135,38 @@ export function AdminDashboardPage() {
                     <td className="px-4 py-2.5">{a.operation_type === "load" ? "تحميل" : "تفريغ"}</td>
                     <td className="px-4 py-2.5">
                       <StatusBadge status={a.status} />
+                      {a.reschedule_reason && (
+                        <p className="mt-1 text-[11px] text-ink/40">{a.reschedule_reason}</p>
+                      )}
+                    </td>
+                    <td className="px-4 py-2.5">
+                      {["confirmed", "rescheduled"].includes(a.status) && (
+                        <button
+                          onClick={() => setRescheduling(a)}
+                          className="flex items-center gap-1 whitespace-nowrap text-xs font-medium text-brand hover:underline"
+                        >
+                          <CalendarClock size={13} />
+                          إعادة جدولة
+                        </button>
+                      )}
                     </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan={5} className="px-4 py-8 text-center text-ink/40">
+                  <td colSpan={6} className="px-4 py-8 text-center text-ink/40">
                     لا توجد مواعيد مسجّلة اليوم
                   </td>
                 </tr>
               )}
             </tbody>
           </table>
+          </div>
         </CardContent>
       </Card>
+      {rescheduling && docks && (
+        <RescheduleDialog appointment={rescheduling} docks={docks} onClose={() => setRescheduling(null)} />
+      )}
     </div>
   );
 }
