@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input, Label } from "@/components/ui/input";
 import { Navigate } from "react-router-dom";
 import { ResourceManager } from "@/components/ResourceManager";
+import { DangerZone } from "@/components/DangerZone";
 
 const schema = z.object({
   name: z.string().min(2, "اسم المصنع مطلوب"),
@@ -116,6 +117,8 @@ export function SettingsPage() {
       </Card>
 
       <ResourceManager facilityId={facilityId} />
+
+      <DangerZone />
     </div>
   );
 }

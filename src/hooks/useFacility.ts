@@ -57,3 +57,22 @@ export function useUpdateFacility(facilityId = 1) {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["facility", facilityId] }),
   });
 }
+
+export interface ResetDemoResult {
+  deletedAppointments: number;
+  deletedCheckins: number;
+  deletedQueueEntries: number;
+  deletedTrucks: number;
+}
+
+/** حذف البيانات التجريبية للمصنع (المسؤول فقط) ثم تحديث كل الشاشات المفتوحة */
+export function useResetDemoData() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async () => {
+      const { data } = await api.post<ResetDemoResult>("/facilities/reset-demo-data", { confirm: true });
+      return data;
+    },
+    onSuccess: () => queryClient.invalidateQueries(),
+  });
+}

@@ -24,3 +24,7 @@ export function removeSavedAppointment(qrCode: string) {
   const current = getSavedAppointments().filter((a) => a.qrCode !== qrCode);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(current));
 }
+
+export function clearSavedAppointments() {
+  localStorage.removeItem(STORAGE_KEY);
+}
